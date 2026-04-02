@@ -46,7 +46,7 @@ Typical flow:
 
 ### Expanded/Full Workflow (custom selection)
 
-If you want explicit scaffold-and-build commands (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:sync`, `/opsx:bulk-archive`, `/opsx:onboard`), enable them with:
+If you want explicit scaffold-and-build commands (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:validate`, `/opsx:sync`, `/opsx:bulk-archive`, `/opsx:onboard`), enable them with:
 
 ```bash
 openspec config profile
@@ -275,6 +275,51 @@ AI:  Verifying add-auth...
 
 Verify won't block archive, but it surfaces issues you might want to address first.
 
+#### Validate: Check Against Main Specs
+
+`/opsx:validate` validates implementation correctness against living specs in `openspec/specs/`, checking if your current codebase implements the specifications correctly.
+
+```text
+You: /opsx:validate user-authentication
+
+AI:  Validating user-authentication against main specs...
+
+     REQUIREMENTS
+     ✓ JWT token generation implemented (src/auth/jwt.ts)
+     ✓ Password hashing with bcrypt (src/auth/password.ts)
+     ✗ CRITICAL: Session timeout mechanism not found
+     ⚠ WARNING: Token refresh may diverge from spec (check src/auth/refresh.ts:45)
+
+     SCENARIOS
+     ✓ Login with valid credentials covered by tests
+     ✓ Login with invalid credentials covered by tests
+     ⚠ SUGGESTION: Add test for "Session timeout after inactivity" scenario
+     ⚠ SUGGESTION: Add test for "Concurrent login attempts" scenario
+
+     SUMMARY
+     ─────────────────────────────
+     Critical issues: 1
+     Warnings: 1
+     Suggestions: 2
+     Requirements: 3/4 implemented
+
+     Recommendations:
+     1. CRITICAL: Implement session timeout mechanism per spec
+     2. WARNING: Review token refresh implementation against spec requirements
+     3. Add tests for missing scenario coverage
+```
+
+**Validate vs. Verify:**
+
+| `/opsx:validate` | `/opsx:verify` |
+|------------------|----------------|
+| Checks against **main specs** (`openspec/specs/`) | Checks against **change artifacts** (`openspec/changes/<name>/`) |
+| Validates current codebase state | Validates a specific change before archiving |
+| "Is the spec implemented?" | "Did we implement what we planned?" |
+| Use for spec compliance | Use before archiving a change |
+
+Use `/opsx:validate` to detect drift between living specs and implementation. Use `/opsx:verify` to validate changes before archiving.
+
 #### Archive: Finalize the Change
 
 `/opsx:archive` completes the change and moves it to the archive:
@@ -440,6 +485,7 @@ For full command details and options, see [Commands](commands.md).
 | `/opsx:ff` | Create all planning artifacts | Expanded mode, clear scope |
 | `/opsx:apply` | Implement tasks | Ready to write code |
 | `/opsx:verify` | Validate implementation | Expanded mode, before archiving |
+| `/opsx:validate` | Validate against main specs | Expanded mode, check spec compliance |
 | `/opsx:sync` | Merge delta specs | Expanded mode, optional |
 | `/opsx:archive` | Complete the change | All work finished |
 | `/opsx:bulk-archive` | Archive multiple changes | Expanded mode, parallel work |

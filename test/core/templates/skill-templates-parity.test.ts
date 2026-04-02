@@ -24,8 +24,10 @@ import {
   getOpsxProposeCommandTemplate,
   getOpsxProposeSkillTemplate,
   getOpsxVerifyCommandTemplate,
+  getOpsxValidateCommandTemplate,
   getSyncSpecsSkillTemplate,
   getVerifyChangeSkillTemplate,
+  getValidateSkillTemplate,
 } from '../../../src/core/templates/skill-templates.js';
 import { generateSkillContent } from '../../../src/core/shared/skill-generation.js';
 
@@ -46,10 +48,12 @@ const EXPECTED_FUNCTION_HASHES: Record<string, string> = {
   getBulkArchiveChangeSkillTemplate: 'b40fc44ea4e420bdc9c803985b10e5c091fc472cdfc69153b962be6be303bddd',
   getOpsxSyncCommandTemplate: '378d035fe7cc30be3e027b66dcc4b8afc78ef1c8369c39479c9b05a582fb5ccf',
   getVerifyChangeSkillTemplate: '63a213ba3b42af54a1cd56f5072234a03b265c3fe4a1da12cd6fbbef5ee46c4b',
+  getValidateSkillTemplate: 'b0152fc9bc58f712a51629ebc0a9d2568c04c9405ac46451100fb230755fdaa6',
   getOpsxArchiveCommandTemplate: 'b44cc9748109f61687f9f596604b037bc3ea803abc143b22f09a76aebd98b493',
   getOpsxOnboardCommandTemplate: '10052d05a4e2cdade7fdfa549b3444f7a92f55a39bf81ddd6af7e0e9e83a7302',
   getOpsxBulkArchiveCommandTemplate: 'eaaba253a950b9e681d8427a5cbc6b50c4e91137fb37fd2360859e08f63a0c14',
   getOpsxVerifyCommandTemplate: '9b4d3ca422553b7534764eb3a009da87a051612c5238e9baab294c7b1233e9a2',
+  getOpsxValidateCommandTemplate: '2c6b5a3bfe1a70fc04a26abe985f11589e6f1b26efcaa2cbb35b3cb8f657a9aa',
   getOpsxProposeSkillTemplate: 'd67f937d44650e9c61d2158c865309fbab23cb3f50a3d4868a640a97776e3999',
   getOpsxProposeCommandTemplate: '41ad59b37eafd7a161bab5c6e41997a37368f9c90b194451295ede5cd42e4d46',
   getFeedbackSkillTemplate: 'd7d83c5f7fc2b92fe8f4588a5bf2d9cb315e4c73ec19bcd5ef28270906319a0d',
@@ -65,6 +69,7 @@ const EXPECTED_GENERATED_SKILL_CONTENT_HASHES: Record<string, string> = {
   'openspec-archive-change': 'f83c85452bd47de0dee6b8efbcea6a62534f8a175480e9044f3043f887cebf0f',
   'openspec-bulk-archive-change': 'a235a539f7729ab7669e45256905808789240ecd02820e044f4d0eef67b0c2ab',
   'openspec-verify-change': '30d07c6f7051965f624f5964db51844ec17c7dfd05f0da95281fe0ca73616326',
+  'openspec-validate-change': '73cdb1af6673b3457fbd75a2e5b971ded8d7dbec378d49a3fdcdf0210b216a5f',
   'openspec-onboard': 'dbce376cf895f3fe4f63b4bce66d258c35b7b8884ac746670e5e35fabcefd255',
   'openspec-propose': '20e36dabefb90e232bad0667292bd5007ec280f8fc4fc995dbc4282bf45a22e7',
 };
@@ -108,10 +113,12 @@ describe('skill templates split parity', () => {
       getBulkArchiveChangeSkillTemplate,
       getOpsxSyncCommandTemplate,
       getVerifyChangeSkillTemplate,
+      getValidateSkillTemplate,
       getOpsxArchiveCommandTemplate,
       getOpsxOnboardCommandTemplate,
       getOpsxBulkArchiveCommandTemplate,
       getOpsxVerifyCommandTemplate,
+      getOpsxValidateCommandTemplate,
       getOpsxProposeSkillTemplate,
       getOpsxProposeCommandTemplate,
       getFeedbackSkillTemplate,
@@ -137,6 +144,7 @@ describe('skill templates split parity', () => {
       ['openspec-archive-change', getArchiveChangeSkillTemplate],
       ['openspec-bulk-archive-change', getBulkArchiveChangeSkillTemplate],
       ['openspec-verify-change', getVerifyChangeSkillTemplate],
+      ['openspec-validate-change', getValidateSkillTemplate],
       ['openspec-onboard', getOnboardSkillTemplate],
       ['openspec-propose', getOpsxProposeSkillTemplate],
     ];

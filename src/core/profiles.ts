@@ -27,6 +27,7 @@ export const ALL_WORKFLOWS = [
   'archive',
   'bulk-archive',
   'verify',
+  'validate',
   'onboard',
 ] as const;
 
